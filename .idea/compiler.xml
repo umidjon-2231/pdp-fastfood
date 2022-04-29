@@ -28,7 +28,7 @@
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
-      <module name="adminService" options="-parameters" />
+      <module name="adminService" options="-parameters --add-modules java.base" />
       <module name="clientMobile" options="-parameters" />
       <module name="clientService" options="-parameters" />
       <module name="courierMobile" options="-parameters" />

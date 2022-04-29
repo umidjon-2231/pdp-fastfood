@@ -9,7 +9,7 @@ spring:
     username: postgres
     password: 250407
     driver-class-name: org.postgresql.Driver
-    url: jdbc:postgresql://localhost:5432/fast_food
+    url: jdbc:postgresql://localhost:5432/pdp_fastfood
   jpa:
     hibernate:
       ddl-auto: create
