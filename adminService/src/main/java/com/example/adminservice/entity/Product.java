@@ -33,4 +33,8 @@ public class Product {
     @Column(nullable = false)
     @Builder.Default
     private boolean active=true;
+
+    @JoinColumn(nullable = false)
+    @ManyToOne
+    private Category category;
 }
