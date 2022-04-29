@@ -13,6 +13,7 @@ import java.time.LocalTime;
 @Entity
 @Table(name = "filials")
 public class Filial {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
@@ -29,5 +30,8 @@ public class Filial {
     // latitude - kenglik
     // longitude - uzunlik
     // xarita koordinatalari
-    private Long latitude, longitude;
+    private Float latitude, longitude;
+    @Column(nullable = false)
+    @Builder.Default
+    private boolean active = true;
 }
