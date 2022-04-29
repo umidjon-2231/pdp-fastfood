@@ -11,6 +11,7 @@ import java.time.LocalTime;
 @Getter
 @Setter
 @Entity
+@Table(name = "filials")
 public class Filial {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -22,8 +23,8 @@ public class Filial {
     private String nameUz, nameRu, intended;
     @Column(columnDefinition = "text")
     private String address;
-    @Column(nullable = false)
-    private LocalTime start, end;
+    @Column(nullable = false, columnDefinition = "time")
+    private LocalTime start, finish;
     @Column(nullable = false)
     // latitude - kenglik
     // longitude - uzunlik

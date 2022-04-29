@@ -3,6 +3,7 @@ package com.example.adminservice.entity;
 import com.example.adminservice.entity.enums.ClientStatus;
 import com.example.adminservice.entity.enums.Language;
 import com.example.adminservice.entity.enums.Region;
+import com.example.adminservice.entity.enums.UserType;
 import lombok.*;
 
 import javax.persistence.*;
@@ -40,8 +41,8 @@ public class Human {
     private Language lang;
 
     @Column(nullable = false)
-    @Builder.Default
-    private boolean courier=false;
+    @Enumerated(EnumType.STRING)
+    private UserType userType;
 
     @OneToOne
     private Attachment photo;
