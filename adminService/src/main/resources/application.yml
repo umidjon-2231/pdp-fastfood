@@ -5,6 +5,8 @@ eureka:
     fetch-registry: true
     register-with-eureka: true
 spring:
+  application:
+    name: ADMINSERVICE
   datasource:
     username: postgres
     password: 911368169umid

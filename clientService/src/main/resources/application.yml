@@ -1,3 +1,4 @@
+
 server:
   port: 8089
 eureka:
@@ -5,6 +6,8 @@ eureka:
     fetch-registry: true
     register-with-eureka: true
 spring:
+  application:
+    name: CLIENTSERVICE
   datasource:
     username: postgres
     password: 911368169umid
