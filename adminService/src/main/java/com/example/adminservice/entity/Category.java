@@ -20,6 +20,10 @@ public class Category {
     @Column(nullable = false)
     private String name;
     @ManyToOne()
-    @JoinColumn
     private Category parent;
+
+
+    @Builder.Default
+    @Column(nullable = false)
+    private boolean active=true;
 }

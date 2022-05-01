@@ -29,5 +29,9 @@ public class Filial {
     // latitude - kenglik
     // longitude - uzunlik
     // xarita koordinatalari
-    private Long latitude, longitude;
+    private Float latitude, longitude;
+
+    @Builder.Default
+    @Column(nullable = false)
+    private boolean active=true;
 }

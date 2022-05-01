@@ -44,6 +44,6 @@ public class Human {
     @Enumerated(EnumType.STRING)
     private UserType userType;
 
-    @OneToOne
+    @OneToOne(cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
     private Attachment photo;
 }

@@ -12,5 +12,8 @@ spring:
     url: jdbc:postgresql://localhost:5432/pdp_fastfood
   jpa:
     show-sql: true
+  mvc:
+    servlet:
+      path: /api
 debug: true
 
