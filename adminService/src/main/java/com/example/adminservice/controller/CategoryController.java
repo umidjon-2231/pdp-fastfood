@@ -27,8 +27,8 @@ public class CategoryController {
 
     @GetMapping("/{id}")
     public HttpEntity<?> getOne(@PathVariable Long id){
-        Optional<Category> optionalCategory = categoryRepository.findById(id);
-        if(optionalCategory.isEmpty() || !optionalCategory.get().isActive()){
+        Optional<Category> optionalCategory = categoryRepository.findByIdAndActiveTrue(id);
+        if(optionalCategory.isEmpty()){
             return ResponseEntity.notFound().build();
         }
         return ResponseEntity.ok().body(optionalCategory.orElseThrow());

@@ -40,9 +40,8 @@ public class Order {
     @Enumerated(EnumType.STRING)
     private PayType payType;
 
-    @Builder.Default
-    @Column(scale = 2)
-    private BigDecimal deliveryPrice=BigDecimal.ZERO;
+    @OneToOne
+    private Delivery delivery;
 
     @ManyToOne
     @JoinColumn(nullable = false)

@@ -17,7 +17,7 @@ public class Product {
     @Column(name = "id")
     private Long id;
 
-    @OneToOne()
+    @OneToOne(cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
     @JoinColumn(nullable = false)
     private Attachment photo;
 

@@ -12,9 +12,12 @@ spring:
     url: jdbc:postgresql://localhost:5432/pdp_fastfood
   jpa:
     hibernate:
-      ddl-auto: update
+      ddl-auto: create
     show-sql: true
   mvc:
     servlet:
       path: /api
+  servlet:
+    multipart:
+      max-file-size: 5MB
 debug: true
