@@ -4,6 +4,7 @@ import com.example.adminservice.entity.enums.ClientStatus;
 import com.example.adminservice.entity.enums.Language;
 import com.example.adminservice.entity.enums.Region;
 import com.example.adminservice.entity.enums.UserType;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 
 import javax.persistence.*;
@@ -27,13 +28,19 @@ public class Human {
     @Column(nullable = false, unique = true)
     private String number;
 
+    @JsonIgnore
+    private String password;
+
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
-    private ClientStatus status;
+    @Builder.Default
+    private ClientStatus status=ClientStatus.ACTIVE;
 
     @Column(nullable = false)
     private LocalDate birthdate;
 
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
     private Region region;
 
     @Column(nullable = false)

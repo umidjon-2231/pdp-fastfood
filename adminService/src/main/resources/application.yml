@@ -16,8 +16,10 @@ spring:
     show-sql: true
   mvc:
     servlet:
-      path: /api
+      path: /api/admin
   servlet:
     multipart:
       max-file-size: 5MB
+  application:
+    name: ADMIN
 debug: true

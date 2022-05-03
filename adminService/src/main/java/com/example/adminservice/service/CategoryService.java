@@ -2,9 +2,7 @@ package com.example.adminservice.service;
 
 import com.example.adminservice.dto.ApiResponse;
 import com.example.adminservice.dto.CategoryDto;
-import com.example.adminservice.dto.HumanDto;
 import com.example.adminservice.entity.Category;
-import com.example.adminservice.entity.Human;
 import com.example.adminservice.mapper.CategoryMapper;
 import com.example.adminservice.repository.CategoryRepository;
 import lombok.RequiredArgsConstructor;
