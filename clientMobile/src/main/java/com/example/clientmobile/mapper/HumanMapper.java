@@ -1,5 +1,6 @@
 package com.example.clientmobile.mapper;
 
+import com.example.clientmobile.dto.AttachmentDto;
 import com.example.clientmobile.dto.HumanDto;
 import com.example.clientmobile.dto.HumanFrontDto;
 import com.example.clientmobile.entity.Human;
@@ -12,21 +13,33 @@ import java.util.List;
 public interface HumanMapper {
     @Named("password")
     default String password(String password){
+        if(password==null){
+            return null;
+        }
         BCryptPasswordEncoder passwordEncoder=new BCryptPasswordEncoder();
         return passwordEncoder.encode(password);
     }
-    @Mapping(source = "password", target = "password", qualifiedByName = "password")
+//    @Mapping(source = "password", target = "password", qualifiedByName = "password")
     Human humanDtoToHuman(HumanDto humanDto);
 
     @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
     void updateHumanFromHumanDto(HumanDto humanDto, @MappingTarget Human human);
 
-    @Mapping(source = "photo.id", target = "photo.url", qualifiedByName = "url")
+    @Mapping(source = "userType", target = "type")
     HumanFrontDto humanToHumanFrontDto(Human human);
     List<HumanFrontDto> humanToHumanFrontDto(List<Human> humans);
 
-    @Named("url")
-    default String url(Long id){
-        return "/api/client/"+id+"/photo";
+    @AfterMapping
+    default void url(@MappingTarget HumanFrontDto humanFrontDto, Human human){
+        if(humanFrontDto.getPhoto()==null || human.getId()==null || human.getUserType()==null){
+            humanFrontDto.setPhoto(AttachmentDto.builder()
+                    .name("image-not-found")
+                    .size(6306L)
+                    .type("image/png")
+                    .url("/api/assets/image-not-found.png")
+                    .build());
+            return;
+        }
+        humanFrontDto.getPhoto().setUrl("/api/client/"+human.getId()+"/photo");
     }
 }

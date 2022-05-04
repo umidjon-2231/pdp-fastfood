@@ -15,5 +15,7 @@ spring:
   mvc:
     servlet:
       path: /api
+  application:
+    name: clientMobile
 debug: true
 

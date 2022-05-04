@@ -21,8 +21,8 @@ import java.util.Map;
 
 @ControllerAdvice
 public class GlobalException {
-    @Value("${spring.servlet.multipart.max-file-size}")
-    private String maxFileSize="1MB";
+    @Value("${spring.servlet.multipart.max-file-size:1MB}")
+    private String maxFileSize;
 
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ExceptionHandler(MethodArgumentNotValidException.class)

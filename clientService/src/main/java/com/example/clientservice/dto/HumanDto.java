@@ -5,6 +5,7 @@ import com.example.clientservice.entity.enums.Language;
 import com.example.clientservice.entity.enums.Region;
 import com.example.clientservice.entity.enums.UserType;
 import lombok.*;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.Serializable;
@@ -17,6 +18,7 @@ public class HumanDto implements Serializable {
     private final String name, password;
     private final String number;
     private final ClientStatus status;
+    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
     private final LocalDate birthdate;
     private final Region region;
     private final Language lang;

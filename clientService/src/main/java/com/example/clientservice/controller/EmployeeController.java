@@ -27,6 +27,21 @@ public class EmployeeController {
     final HumanRepository humanRepository;
     final HumanService humanService;
 
+    @GetMapping("/{id}")
+    public HttpEntity<?> getOne(@PathVariable Long id) {
+        Optional<Human> optionalHuman = humanRepository.findByStatusIsNotAndId(ClientStatus.DELETED, id);
+        if (optionalHuman.isEmpty() || optionalHuman.get().getUserType()==UserType.CLIENT) {
+            return ResponseEntity.badRequest().body(ApiResponse.builder()
+                    .message("Employee with id=(" + id + ") not found")
+                    .build());
+        }
+        return ResponseEntity.ok().body(ApiResponse.builder()
+                .success(true)
+                .message("Found")
+                .data(humanMapper.humanToHumanFrontDto(optionalHuman.get()))
+                .build());
+    }
+
     @GetMapping("/courier")
     public HttpEntity<?> getAllCourier() {
         return ResponseEntity.ok().body(
