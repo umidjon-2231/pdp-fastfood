@@ -21,4 +21,5 @@ public class HumanDto implements Serializable {
     private final Region region;
     private final Language lang;
     private final MultipartFile photo;
+    private final UserType type;
 }

@@ -19,9 +19,8 @@ public class HumanService {
     final HumanRepository humanRepository;
     final HumanMapper humanMapper;
 
-    public ApiResponse<HumanFrontDto> add(HumanDto dto, UserType userType) {
+    public ApiResponse<HumanFrontDto> add(HumanDto dto) {
         Human human = humanMapper.humanDtoToHuman(dto);
-        human.setUserType(userType);
         if (dto.getStatus() == null) {
             human.setStatus(ClientStatus.ACTIVE);
         }
@@ -33,11 +32,11 @@ public class HumanService {
                 .build();
     }
 
-    public ApiResponse<HumanFrontDto> edit(Long id, HumanDto dto, UserType userType) {
+    public ApiResponse<HumanFrontDto> edit(Long id, HumanDto dto) {
         Optional<Human> optionalHuman = humanRepository.findByStatusIsNotAndId(ClientStatus.DELETED, id);
-        if (optionalHuman.isEmpty() || optionalHuman.get().getUserType() != userType) {
+        if (optionalHuman.isEmpty()) {
             return ApiResponse.<HumanFrontDto>builder()
-                    .message(userType.name() + " with id=(" + id + ") not found")
+                    .message(dto.getType().name() + " with id=(" + id + ") not found")
                     .build();
         }
         Human human = optionalHuman.get();
@@ -53,11 +52,11 @@ public class HumanService {
                 .build();
     }
 
-    public ApiResponse<?> delete(Long id, UserType userType) {
+    public ApiResponse<?> delete(Long id) {
         Optional<Human> optionalHuman = humanRepository.findByStatusIsNotAndId(ClientStatus.DELETED, id);
-        if (optionalHuman.isEmpty() || optionalHuman.get().getUserType() != userType) {
+        if (optionalHuman.isEmpty()) {
             return ApiResponse.builder()
-                    .message(userType.name() + " with id=(" + id + ") not found")
+                    .message("Employee with id=(" + id + ") not found")
                     .build();
         }
         optionalHuman.get().setStatus(ClientStatus.DELETED);
@@ -68,11 +67,11 @@ public class HumanService {
                 .build();
     }
 
-    public ApiResponse<Object> block(Long id, UserType userType) {
+    public ApiResponse<Object> block(Long id) {
         Optional<Human> optionalHuman = humanRepository.findByStatusIsNotAndId(ClientStatus.DELETED, id);
-        if (optionalHuman.isEmpty() || optionalHuman.get().getUserType() != userType) {
+        if (optionalHuman.isEmpty()) {
             return ApiResponse.builder()
-                    .message(userType.name() + " with id=(" + id + ") not found")
+                    .message("Employee with id=(" + id + ") not found")
                     .build();
         }
         optionalHuman.get().setStatus(ClientStatus.BLOCKED);

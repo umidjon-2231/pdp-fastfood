@@ -1,5 +1,6 @@
 package com.example.clientservice.mapper;
 
+import com.example.clientservice.dto.AttachmentDto;
 import com.example.clientservice.dto.HumanDto;
 import com.example.clientservice.dto.HumanFrontDto;
 import com.example.clientservice.entity.Human;
@@ -19,6 +20,7 @@ public interface HumanMapper {
         BCryptPasswordEncoder passwordEncoder=new BCryptPasswordEncoder();
         return passwordEncoder.encode(password);
     }
+    @Mapping(source = "type", target = "userType")
     @Mapping(source = "password", target = "password", qualifiedByName = "password")
     Human humanDtoToHuman(HumanDto humanDto);
 
@@ -30,10 +32,15 @@ public interface HumanMapper {
 
     @AfterMapping
     default void url(@MappingTarget HumanFrontDto humanFrontDto, Human human){
-        if(human.getId()==null || human.getUserType()==null){
-            humanFrontDto.getPhoto().setUrl("");
+        if(humanFrontDto.getPhoto()==null || human.getId()==null || human.getUserType()==null){
+            humanFrontDto.setPhoto(AttachmentDto.builder()
+                            .name("image-not-found")
+                            .size(6306L)
+                            .type("image/png")
+                            .url("/api/assets/image-not-found.png")
+                    .build());
             return;
         }
-        humanFrontDto.getPhoto().setUrl("/api/"+human.getUserType().name().toLowerCase(Locale.ROOT) + "/"+human.getId()+"/photo");
+        humanFrontDto.getPhoto().setUrl("/api/employee/"+human.getId()+"/photo");
     }
 }
