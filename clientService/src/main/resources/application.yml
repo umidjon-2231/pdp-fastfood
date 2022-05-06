@@ -2,9 +2,8 @@ server:
   port: 8089
 eureka:
   client:
-    fetch-registry: false
-    register-with-eureka: false
-#    TODO: change eureka parameters to true
+    fetch-registry: true
+    register-with-eureka: true
 spring:
   datasource:
     username: postgres
@@ -17,12 +16,12 @@ spring:
       ddl-auto: update
   mvc:
     servlet:
-      path: /api
+      path: /api/client
   servlet:
     multipart:
       max-file-size: 10MB
   application:
-    name: clientService
+    name: CLIENTSERVICE
   sql:
     init:
       mode: NEVER

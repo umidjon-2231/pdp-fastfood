@@ -15,7 +15,7 @@ spring:
         - id: clientService
           predicates:
             - Path=/api/client/**
-          uri: lb://CLIENT
+          uri: lb://CLIENTSERVICE
         - id: orderService
           predicates:
             - Path=/api/order/**
@@ -27,6 +27,6 @@ spring:
         - id: clientMobile
           predicates:
             - Path=/api/clientMobile/**
-          uri: lb://CURIERMOBILE
+          uri: lb://CLIENTMOBILE
 
 

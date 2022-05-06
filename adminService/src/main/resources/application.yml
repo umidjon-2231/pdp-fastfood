@@ -11,8 +11,8 @@ spring:
     driver-class-name: org.postgresql.Driver
     url: jdbc:postgresql://localhost:5432/pdp_fastfood
   jpa:
-    hibernate:
-      ddl-auto: create
+#    hibernate:
+#      ddl-auto: create
     show-sql: true
   mvc:
     servlet:

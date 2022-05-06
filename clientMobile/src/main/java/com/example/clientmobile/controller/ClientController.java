@@ -63,11 +63,7 @@ public class ClientController {
         return ResponseEntity.status(apiResponse.isSuccess() ? 200 : 400).body(apiResponse);
     }
 
-    @DeleteMapping("/{id}")
-    public HttpEntity<?> delete(@PathVariable Long id) {
-        ApiResponse<?> apiResponse = clientService.delete(id);
-        return ResponseEntity.status(apiResponse.isSuccess() ? 200 : 400).body(apiResponse);
-    }
+//    TODO delete kerakmi?
 
     @PostMapping("/{id}/block")
     public HttpEntity<?> block(@PathVariable Long id) {

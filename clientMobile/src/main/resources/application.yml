@@ -14,8 +14,8 @@ spring:
     show-sql: true
   mvc:
     servlet:
-      path: /api
+      path: /api/clientMobile
   application:
-    name: clientMobile
+    name: CLIENTMOBILE
 debug: true
 
