@@ -17,6 +17,9 @@ spring:
       path: /api/curierMobile
   application:
     name: COURIERMOBILE
+  servlet:
+    multipart:
+      max-file-size: 10MB
 debug: true
 
 

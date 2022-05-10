@@ -3,6 +3,7 @@ package com.example.clientmobile.entity;
 import lombok.*;
 
 import javax.persistence.*;
+import java.math.BigDecimal;
 
 @Builder
 @AllArgsConstructor
@@ -22,4 +23,10 @@ public class OrderProduct {
 
     @Column(nullable = false)
     private Integer count;
+
+    @Column(nullable = false, scale = 2)
+    private BigDecimal price;
+
+    @Column(nullable = false, scale = 2)
+    private BigDecimal amount;
 }

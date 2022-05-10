@@ -27,14 +27,14 @@ public class ClientController {
     final HumanRepository humanRepository;
     final ClientService clientService;
 
-    @GetMapping
-    public HttpEntity<?> getAll() {
-        return ResponseEntity.ok().body(
-                humanMapper.humanToHumanFrontDto(
-                        humanRepository.findByUserTypeEqualsAndStatusIsNot(UserType.CLIENT, ClientStatus.DELETED)
-                )
-        );
-    }
+//    @GetMapping
+//    public HttpEntity<?> getAll() {
+//        return ResponseEntity.ok().body(
+//                humanMapper.humanToHumanFrontDto(
+//                        humanRepository.findByUserTypeEqualsAndStatusIsNot(UserType.CLIENT, ClientStatus.DELETED)
+//                )
+//        );
+//    }
 
     @GetMapping("/{id}")
     public HttpEntity<?> getOne(@PathVariable Long id) {
@@ -44,11 +44,7 @@ public class ClientController {
                     .message("Client with id=(" + id + ") not found")
                     .build());
         }
-        return ResponseEntity.ok().body(ApiResponse.builder()
-                        .success(true)
-                        .message("Found")
-                        .data(humanMapper.humanToHumanFrontDto(optionalHuman.get()))
-                .build());
+        return ResponseEntity.ok().body(humanMapper.humanToHumanFrontDto(optionalHuman.get()));
     }
 
     @PostMapping

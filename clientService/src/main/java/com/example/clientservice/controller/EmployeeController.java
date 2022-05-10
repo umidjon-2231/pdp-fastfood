@@ -92,20 +92,4 @@ public class EmployeeController {
         ApiResponse<Object> apiResponse = humanService.block(id);
         return ResponseEntity.status(apiResponse.isSuccess() ? 200 : 400).body(apiResponse);
     }
-
-    @GetMapping("/{id}/photo")
-    public HttpEntity<?> getPhoto(@PathVariable Long id) {
-        Optional<Human> optionalHuman = humanRepository.findByStatusIsNotAndId(ClientStatus.DELETED, id);
-        if (optionalHuman.isEmpty()) {
-            return ResponseEntity.notFound().build();
-        }
-        if(optionalHuman.get().getPhoto()==null){
-            return ResponseEntity.status(HttpStatus.FOUND).location(URI.create("/api/assets/image-not-found.png")).build();
-        }
-        Attachment photo = optionalHuman.get().getPhoto();
-        return ResponseEntity.ok()
-                .contentType(MediaType.valueOf(photo.getType()))
-                .contentLength(photo.getSize())
-                .body(photo.getBytes());
-    }
 }

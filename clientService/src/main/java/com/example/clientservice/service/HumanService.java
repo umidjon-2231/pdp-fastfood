@@ -71,7 +71,7 @@ public class HumanService {
         Optional<Human> optionalHuman = humanRepository.findByStatusIsNotAndId(ClientStatus.DELETED, id);
         if (optionalHuman.isEmpty()) {
             return ApiResponse.builder()
-                    .message("Employee with id=(" + id + ") not found")
+                    .message("Human with id=(" + id + ") not found")
                     .build();
         }
         optionalHuman.get().setStatus(ClientStatus.BLOCKED);

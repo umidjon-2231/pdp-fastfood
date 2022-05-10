@@ -10,6 +10,7 @@ import java.time.LocalTime;
 @NoArgsConstructor
 @Getter
 @Setter
+@ToString
 @Entity
 @Table(name = "filials")
 public class Filial {

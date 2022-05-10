@@ -5,6 +5,7 @@ import com.example.couriermobile.entity.enums.PayType;
 import lombok.*;
 
 import javax.persistence.*;
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -14,6 +15,7 @@ import java.util.List;
 @Getter
 @Setter
 @Entity
+@ToString
 @Table(name = "orders")
 public class Order {
     @Id
@@ -25,12 +27,8 @@ public class Order {
     @Builder.Default
     private LocalDateTime time=LocalDateTime.now();
 
-    @ManyToOne
-    @JoinColumn(nullable = false)
-    private Human courier;
-
-    @OneToMany
-    @JoinColumn()
+    @OneToMany(cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
+    @JoinColumn
     private List<OrderProduct> products;
 
     @ManyToOne
@@ -39,7 +37,7 @@ public class Order {
     @Enumerated(EnumType.STRING)
     private PayType payType;
 
-    @OneToOne
+    @OneToOne(cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
     private Delivery delivery;
 
     @ManyToOne
@@ -48,9 +46,13 @@ public class Order {
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
-    private OrderStatus orderStatus;
+    @Builder.Default
+    private OrderStatus orderStatus=OrderStatus.NEW;
 
     @ManyToOne
     @JoinColumn(nullable = false)
     private Human client;
+
+    @Column(nullable = false, scale = 2)
+    private BigDecimal amount;
 }

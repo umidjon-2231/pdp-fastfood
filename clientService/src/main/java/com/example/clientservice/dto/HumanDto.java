@@ -14,14 +14,14 @@ import java.time.LocalDate;
 @AllArgsConstructor
 @Getter
 @Setter
-public class HumanDto implements Serializable {
-    private final String name, password;
-    private final String number;
-    private final ClientStatus status;
+public class HumanDto {
+    private String name, password;
+    private String number;
+    private ClientStatus status;
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
-    private final LocalDate birthdate;
-    private final Region region;
-    private final Language lang;
-    private final MultipartFile photo;
-    private final UserType type;
+    private LocalDate birthdate;
+    private Region region;
+    private Language lang;
+    private MultipartFile photo;
+    private UserType type;
 }

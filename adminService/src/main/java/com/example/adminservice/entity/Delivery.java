@@ -24,7 +24,7 @@ public class Delivery {
     private Float longitude, latitude;
 
     @ManyToOne()
-    @JoinColumn(nullable = false)
+    @JoinColumn()
     private Human courier;
 
     @Column(nullable = false)
