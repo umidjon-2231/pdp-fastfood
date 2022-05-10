@@ -24,11 +24,21 @@ public class OrderService {
     final AttachmentMapper attachmentMapper;
 
     @SneakyThrows
-    public ApiResponse<HumanFrontDto> changePhoto(Long id, MultipartFile photo){
+    public ApiResponse<HumanFrontDto> changePhoto(Long id, MultipartFile photo) {
         Optional<Human> optionalHuman = humanRepository.findById(id);
-        if(optionalHuman.isEmpty()){
+        if (optionalHuman.isEmpty() || optionalHuman.get().getUserType() != UserType.COURIER) {
             return ApiResponse.<HumanFrontDto>builder()
-                    .message("Courier with id=(" + id+") not found")
+                    .message("Courier with id=(" + id + ") not found")
+                    .build();
+        }
+        if (photo == null || photo.isEmpty() || photo.getOriginalFilename() == null) {
+            return ApiResponse.<HumanFrontDto>builder()
+                    .message("File must be in field \"photo\" and not be empty")
+                    .build();
+        }
+        if (!photo.getOriginalFilename().matches("^(.+)\\.(jpg|png|jpeg)$")) {
+            return ApiResponse.<HumanFrontDto>builder()
+                    .message("File type must be jpg, png or jpeg")
                     .build();
         }
         optionalHuman.get().setPhoto(attachmentMapper.toEntity(photo));
@@ -42,9 +52,9 @@ public class OrderService {
 
     public ApiResponse<HumanFrontDto> edit(Long id, CourierEditDto dto) {
         Optional<Human> optionalHuman = humanRepository.findById(id);
-        if(optionalHuman.isEmpty() || optionalHuman.get().getUserType()!= UserType.COURIER){
+        if (optionalHuman.isEmpty() || optionalHuman.get().getUserType() != UserType.COURIER) {
             return ApiResponse.<HumanFrontDto>builder()
-                    .message("Courier with id=(" + id+") not found")
+                    .message("Courier with id=(" + id + ") not found")
                     .build();
         }
         Human human = optionalHuman.get();

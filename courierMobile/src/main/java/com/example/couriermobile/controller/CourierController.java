@@ -11,11 +11,15 @@ import com.example.couriermobile.repository.HumanRepository;
 import com.example.couriermobile.repository.OrderRepository;
 import com.example.couriermobile.service.OrderService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.Optional;
 
 @RestController
@@ -37,12 +41,33 @@ public class CourierController {
     }
 
     @GetMapping("/{id}/orders")
-    public HttpEntity<?> getOrders(@PathVariable Long id){
+    public HttpEntity<?> getOrders(
+            @PathVariable Long id,
+            @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate from,
+            @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate to
+    ){
         Optional<Human> optionalHuman = humanRepository.findByStatusIsNotAndId(ClientStatus.DELETED, id);
         if(optionalHuman.isEmpty()){
             return ResponseEntity.notFound().build();
         }
-        return ResponseEntity.ok().body(orderMapper.orderToOrderFrontDto(orderRepository.findByDelivery_Courier_Id(id)));
+        if(from==null && to==null){
+            return ResponseEntity.ok().body(orderMapper.orderToOrderFrontDto(orderRepository.findByDelivery_Courier_Id(id)));
+        }else if(from!=null && to!=null){
+            return ResponseEntity.ok().body(orderMapper.orderToOrderFrontDto(
+                    orderRepository.findByDelivery_Courier_IdAndTimeIsBetween(id,
+                            LocalDateTime.of(from, LocalTime.parse("00:00")),
+                            LocalDateTime.of(to, LocalTime.parse("23:59")))
+            ));
+        }
+        if(from!=null){
+            return ResponseEntity.ok().body(orderMapper.orderToOrderFrontDto(
+                    orderRepository.findByDelivery_Courier_IdAndTimeIsBetween(id,
+                            LocalDateTime.of(from, LocalTime.parse("00:00")), LocalDateTime.now())
+            ));
+        }
+        return ResponseEntity.ok().body(orderMapper.orderToOrderFrontDto(
+                orderRepository.findByDelivery_Courier_Id(id)
+        ));
     }
 
     @PutMapping("/{id}/photo")

@@ -4,9 +4,11 @@ import com.example.couriermobile.entity.Order;
 import com.example.couriermobile.entity.enums.OrderStatus;
 import org.springframework.data.jpa.repository.JpaRepository;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 public interface OrderRepository extends JpaRepository<Order, Long> {
+    List<Order> findByDelivery_Courier_IdAndTimeIsBetween(Long id, LocalDateTime timeStart, LocalDateTime timeEnd);
     List<Order> findByOrderStatus(OrderStatus orderStatus);
     List<Order> findByOrderStatusAndDelivery_Courier_idIsNull(OrderStatus orderStatus);
     List<Order> findByOrderStatusAndFilial_Id(OrderStatus orderStatus, Long filial_id);
