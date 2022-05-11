@@ -16,27 +16,27 @@ public class FilialService {
     final FilialRepository filialRepository;
     final FilialMapper filialMapper;
 
-    public ApiResponse<?> add(FilialDto dto){
+    public ApiResponse<Filial> add(FilialDto dto){
         Filial filial = filialMapper.filialDtoToFilial(dto);
         Filial save = filialRepository.save(filial);
-        return ApiResponse.builder()
+        return ApiResponse.<Filial>builder()
                 .data(save)
                 .success(true)
                 .message("Added!")
                 .build();
     }
 
-    public ApiResponse<?> edit(Long id, FilialDto dto){
+    public ApiResponse<Filial> edit(Long id, FilialDto dto){
         Optional<Filial> optionalFilial = filialRepository.findByIdAndActiveTrue(id);
         if(optionalFilial.isEmpty()){
-            return ApiResponse.builder()
+            return ApiResponse.<Filial>builder()
                     .message("Filial with id=("+ id + ") not found")
                     .build();
         }
         Filial filial = optionalFilial.get();
         filialMapper.updateFilialFromFilialDto(dto, filial);
         Filial save = filialRepository.save(filial);
-        return ApiResponse.builder()
+        return ApiResponse.<Filial>builder()
                 .success(true)
                 .message("Edited!")
                 .data(save)
@@ -44,7 +44,7 @@ public class FilialService {
     }
 
 
-    public ApiResponse<?> delete(Long id){
+    public ApiResponse<Object> delete(Long id){
         Optional<Filial> optionalFilial = filialRepository.findByIdAndActiveTrue(id);
         if(optionalFilial.isEmpty()){
             return ApiResponse.builder()
