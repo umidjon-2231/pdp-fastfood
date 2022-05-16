@@ -3,7 +3,6 @@ package com.example.couriermobile.service;
 import com.example.couriermobile.dto.ApiResponse;
 import com.example.couriermobile.dto.CourierEditDto;
 import com.example.couriermobile.dto.HumanFrontDto;
-import com.example.couriermobile.entity.Attachment;
 import com.example.couriermobile.entity.Human;
 import com.example.couriermobile.entity.enums.UserType;
 import com.example.couriermobile.mapper.AttachmentMapper;
@@ -18,7 +17,7 @@ import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
-public class OrderService {
+public class CourierService {
     final HumanRepository humanRepository;
     final HumanMapper humanMapper;
     final AttachmentMapper attachmentMapper;

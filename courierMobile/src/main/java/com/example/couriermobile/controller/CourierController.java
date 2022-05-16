@@ -9,7 +9,7 @@ import com.example.couriermobile.mapper.HumanMapper;
 import com.example.couriermobile.mapper.OrderMapper;
 import com.example.couriermobile.repository.HumanRepository;
 import com.example.couriermobile.repository.OrderRepository;
-import com.example.couriermobile.service.OrderService;
+import com.example.couriermobile.service.CourierService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpEntity;
@@ -29,7 +29,7 @@ public class CourierController {
     final HumanMapper humanMapper;
     final OrderRepository orderRepository;
     final OrderMapper orderMapper;
-    final OrderService orderService;
+    final CourierService courierService;
 
     @GetMapping("/{number}")
     public HttpEntity<?> getSelf(@PathVariable String number){
@@ -72,13 +72,13 @@ public class CourierController {
 
     @PutMapping("/{id}/photo")
     public HttpEntity<?> getPhoto(@PathVariable Long id, MultipartHttpServletRequest req){
-        ApiResponse<HumanFrontDto> apiResponse = orderService.changePhoto(id, req.getFile("photo"));
+        ApiResponse<HumanFrontDto> apiResponse = courierService.changePhoto(id, req.getFile("photo"));
         return ResponseEntity.status(apiResponse.isSuccess()?200:400).body(apiResponse);
     }
 
     @PutMapping("/{id}")
     public HttpEntity<?> editData(@PathVariable Long id, @RequestBody CourierEditDto dto){
-        ApiResponse<HumanFrontDto> apiResponse=orderService.edit(id, dto);
+        ApiResponse<HumanFrontDto> apiResponse= courierService.edit(id, dto);
         return ResponseEntity.status(apiResponse.isSuccess()?200:400).body(apiResponse);
     }
 

@@ -49,27 +49,27 @@ public class GlobalException {
 
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     @ExceptionHandler(SQLException.class)
-    public HttpEntity<?> handleSqlError(SQLException e){
-        Map<String, String> errors=new LinkedHashMap<>();
-        switch (e.getSQLState()){
-            case "23503"->{
-                String message=e.getMessage();
-                message=message.substring(0, message.length()-2);
-                String obj=message.substring(message.lastIndexOf("\"")+1);
-                String id=message.substring(message.lastIndexOf("(")+1, message.lastIndexOf(")"));
-                errors.put("message", obj+" with id=(" +id+ ") not found");
+    public HttpEntity<?> handleSqlError(SQLException e) {
+        Map<String, String> errors = new LinkedHashMap<>();
+        switch (e.getSQLState()) {
+            case "23503" -> {
+                String message = e.getMessage();
+                message = message.substring(0, message.length() - 2);
+                String obj = message.substring(message.lastIndexOf("\"") + 1);
+                String id = message.substring(message.lastIndexOf("(") + 1, message.lastIndexOf(")"));
+                errors.put("message", obj + " with id=(" + id + ") not found");
             }
             default -> {
-                errors.put("message", e.getCause()!=null?e.getCause().getMessage():e.getMessage());
+                errors.put("message", e.getCause() != null ? e.getCause().getMessage() : e.getMessage());
             }
         }
         return ResponseEntity.status(500).body(errors);
     }
 
     @ExceptionHandler(MaxUploadSizeExceededException.class)
-    public HttpEntity<?> handleSizeException(){
+    public HttpEntity<?> handleSizeException() {
         return ResponseEntity.badRequest().body(ApiResponse.builder()
-                        .message("File size must be less than "+maxFileSize)
+                .message("File size must be less than " + maxFileSize)
                 .build());
     }
 }

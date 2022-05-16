@@ -6,7 +6,6 @@ import com.example.clientmobile.mapper.ProductMapper;
 import com.example.clientmobile.repository.CategoryRepository;
 import com.example.clientmobile.repository.OrderProductRepository;
 import com.example.clientmobile.repository.ProductRepository;
-import com.example.clientmobile.service.ProductService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Example;
 import org.springframework.http.HttpEntity;
@@ -20,7 +19,6 @@ import java.util.Optional;
 @RequestMapping("/product")
 @RequiredArgsConstructor
 public class ProductController {
-    final ProductService service;
     final ProductRepository productRepository;
     final OrderProductRepository orderProductRepository;
     final ProductMapper productMapper;
